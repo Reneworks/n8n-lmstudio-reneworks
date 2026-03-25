@@ -64,5 +64,5 @@ Este nodo actúa como un wrapper de LangChain que traduce las peticiones de n8n 
 - La gestión de herramientas y plugins vía el sistema de integraciones de LM Studio.
 
 ---
-Desarrollado con ❤️ por **Antigravity** para la comunidad de n8n.
+Desarrollado con ❤️ para la comunidad de n8n.
 Visita mi web: [reneworks.mx](https://reneworks.mx)

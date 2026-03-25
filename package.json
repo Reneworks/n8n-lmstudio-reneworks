@@ -8,8 +8,8 @@
   "license": "MIT",
   "homepage": "https://github.com/your-repo/n8n-nodes-mcp-chat",
   "author": {
-    "name": "Antigravity",
-    "email": "antigravity@google.com"
+    "name": "Reneworks",
+    "email": "contacto@reneworks.mx"
   },
   "main": "index.js",
   "scripts": {
