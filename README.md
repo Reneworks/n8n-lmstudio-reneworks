@@ -1,48 +1,68 @@
-# n8n-nodes-mcp-chat
+# n8n-nodes-lmstudio-reneworks
 
-This is an n8n community node that lets you use an MCP-enabled Chat API as a Language Model in n8n.
+[English version (README.en.md)](./README.en.md)
 
-## Installation
+Este es un nodo de comunidad para n8n que te permite conectar **LM Studio** directamente con los **AI Agents** de n8n, con soporte completo para servidores **MCP (Model Context Protocol)**.
 
-### For Local n8n
-1.  Go to your n8n root directory (e.g. `~/.n8n`).
-2.  Create a `custom` directory if it doesn't exist: `mkdir custom`.
-3.  Clone or copy this repository into `custom/n8n-nodes-mcp-chat`.
-4.  Inside `custom/n8n-nodes-mcp-chat`, run `npm install` and `npm run build`.
-5.  In `~/.n8n`, run `npm install ./custom/n8n-nodes-mcp-chat`.
-6.  Start n8n: `n8n start`.
+Está diseñado para ser el puente perfecto entre tus modelos locales de LM Studio y las capacidades agenticas de n8n.
 
-### For Docker
-You need to build a custom Docker image or mount the volume. Use the `n8n-nodes-starter` guide for details on mounting.
+## ¿Por qué usar este nodo?
 
-## Usage
+1.  **Compatibilidad nativa con AI Agents**: Se conecta perfectamente al input de "Model" de los agentes de n8n.
+2.  **Soporte MCP**: Permite usar herramientas (herramientas de búsqueda, navegación, base de datos, etc.) conectando servidores MCP directamente en las opciones del nodo.
+3.  **Optimizado para LM Studio**: Configurado para usar el endpoint `/api/v1/chat` de LM Studio, manejando el historial de conversación de forma eficiente.
+4.  **Lista dinámica de modelos**: Una vez configurada la URL, el nodo carga automáticamente los modelos que tienes descargados en LM Studio.
 
-1.  Open your n8n workflow.
-2.  Add an **AI Agent** node.
-3.  Add the **MCP Chat Model** node.
-4.  Connect the **MCP Chat Model** output to the **Model** input of the **AI Agent**.
-5.  Configure the **MCP Chat Model**:
-    *   **Base URL**: The address of your MCP Chat API (default: `http://localhost:1234`).
-    *   **Model Name**: The model identifier (e.g., `ibm/granite-4-micro`).
-    *   **Integrations**: Paste the JSON configuration for your MCP servers/plugins.
+## Instalación
 
-### Example Integrations JSON
+En tu instancia de n8n (Settings > Community Nodes), instala el paquete:
+
+```bash
+n8n-nodes-lmstudio-reneworks
+```
+
+O vía terminal en tu directorio de n8n:
+
+```bash
+npm install n8n-nodes-lmstudio-reneworks
+```
+
+## Configuración
+
+1.  Asegúrate de tener **LM Studio** abierto y el **Local Server** activado (generalmente en `http://localhost:1234`).
+2.  En n8n, arrastra el nodo **LM Studio Chat Model**.
+3.  Configura la **Base URL** (ej. `http://localhost:1234`).
+4.  Selecciona el **Model** de la lista desplegable (se cargará automáticamente).
+5.  **Opciones**: Configura temperatura, tokens máximos, etc.
+6.  **Integraciones (Opcional)**: Aquí es donde ocurre la magia de MCP. Puedes pasar una configuración JSON para habilitar servidores MCP externos.
+
+### Ejemplo de Integraciones (MCP)
+
+Puedes habilitar herramientas como navegación web con Playwright o búsqueda en Hugging Face:
+
 ```json
 [
   {
     "type": "ephemeral_mcp",
     "server_label": "huggingface",
     "server_url": "https://huggingface.co/mcp",
-    "allowed_tools": [
-      "model_search"
-    ]
+    "allowed_tools": ["model_search"]
   },
   {
     "type": "plugin",
     "id": "mcp/playwright",
-    "allowed_tools": [
-      "browser_navigate"
-    ]
+    "allowed_tools": ["browser_navigate"]
   }
 ]
 ```
+
+## Funcionamiento técnico
+
+Este nodo actúa como un wrapper de LangChain que traduce las peticiones de n8n al formato específico de la API de LM Studio. Maneja automáticamente:
+- La extracción del `System Prompt`.
+- La concatenación del historial de chat para máxima compatibilidad con modelos locales.
+- La gestión de herramientas y plugins vía el sistema de integraciones de LM Studio.
+
+---
+Desarrollado con ❤️ por **Antigravity** para la comunidad de n8n.
+Visita mi web: [reneworks.mx](https://reneworks.mx)

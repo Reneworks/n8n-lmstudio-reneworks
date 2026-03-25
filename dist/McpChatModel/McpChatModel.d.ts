@@ -23,7 +23,7 @@ export declare class McpChatModel extends BaseChatModel {
     topK?: number;
     constructor(fields: McpChatModelInput);
     _llmType(): string;
+    bindTools(tools: any[], kwargs?: any): import("@langchain/core/dist/runnables/base").Runnable<import("@langchain/core/dist/language_models/base").BaseLanguageModelInput, import("@langchain/core/messages").BaseMessageChunk, import("@langchain/core/dist/language_models/base").BaseLanguageModelCallOptions>;
     _generate(messages: BaseMessage[], options: this['ParsedCallOptions'], runManager?: CallbackManagerForLLMRun): Promise<ChatResult>;
-    _convertMessagesToApi(messages: BaseMessage[]): any[];
     _convertResponseToGenerations(response: any): any[];
 }
