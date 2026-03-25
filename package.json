@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-lmstudio-reneworks",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Connect n8n to LM Studio with MCP server support, designed for AI Agents.",
   "keywords": [
     "n8n-community-node-package"
