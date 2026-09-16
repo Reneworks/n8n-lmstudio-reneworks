@@ -5,6 +5,7 @@
 [![n8n community node](https://img.shields.io/badge/n8n-community%20node-blue.svg)](https://www.npmjs.com/package/n8n-nodes-lmstudio-reneworks)
 [![Security](https://img.shields.io/badge/security-audit%20passed-brightgreen.svg)](./SECURITY.md)
 [![Tests](https://img.shields.io/badge/tests-8%2F8%20passing-brightgreen.svg)]()
+[![CI](https://github.com/Reneworks/n8n-lmstudio-reneworks/actions/workflows/ci.yml/badge.svg)](https://github.com/Reneworks/n8n-lmstudio-reneworks/actions/workflows/ci.yml)
 
 [English version (README.en.md)](./README.en.md)
 

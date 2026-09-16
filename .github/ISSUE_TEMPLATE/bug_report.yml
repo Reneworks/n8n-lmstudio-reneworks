@@ -1,0 +1,32 @@
+name: Bug report
+about: Report a bug to help us improve
+title: "[Bug] "
+labels: bug
+
+- [ ] I confirm this is a bug, not a usage question
+- [ ] I am using the latest version of n8n-nodes-lmstudio-reneworks
+
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To reproduce**
+Steps to reproduce the behavior:
+1. n8n version and install method (Docker, desktop, etc.)
+2. Node configuration: API Mode, model, streaming, tools/integrations
+3. The error or unexpected behavior
+
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Screenshots or logs**
+If applicable, add screenshots or the error output from the AI Agent node.
+
+**Environment**
+- n8n version:
+- Node version:
+- LM Studio version:
+- API Mode (native / chat / responses):
+- Package version:
+
+**Additional context**
+Anything else that might be relevant.
