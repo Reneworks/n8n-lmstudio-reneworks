@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-lmstudio-reneworks",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Connect n8n to LM Studio with MCP server support, designed for AI Agents. Multi-mode: native REST, OpenAI Chat Completions and Responses.",
   "keywords": [
     "n8n-community-node-package",
@@ -55,18 +55,19 @@
     "typescript": "^5.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "funding": {
     "type": "individual",
     "url": "https://reneworks.mx"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.80",
+    "@langchain/core": "^1.2.11",
     "axios": "^1.0.0"
   },
   "overrides": {
-    "form-data": "^4.0.5"
+    "form-data": "^4.0.6",
+    "isolated-vm": "7.0.1"
   },
   "jest": {
     "preset": "ts-jest",
@@ -74,5 +75,8 @@
     "testMatch": [
       "**/test/**/*.test.ts"
     ]
+  },
+  "allowScripts": {
+    "isolated-vm@7.0.1": true
   }
 }

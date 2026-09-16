@@ -1,5 +1,11 @@
 # n8n-nodes-lmstudio-reneworks
 
+[![npm version](https://img.shields.io/npm/v/n8n-nodes-lmstudio-reneworks)](https://www.npmjs.com/package/n8n-nodes-lmstudio-reneworks)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![n8n community node](https://img.shields.io/badge/n8n-community%20node-blue.svg)](https://www.npmjs.com/package/n8n-nodes-lmstudio-reneworks)
+[![Security](https://img.shields.io/badge/security-audit%20passed-brightgreen.svg)](./SECURITY.md)
+[![Tests](https://img.shields.io/badge/tests-8%2F8%20passing-brightgreen.svg)]()
+
 [English version (README.en.md)](./README.en.md)
 
 Nodo de comunidad para n8n que conecta **LM Studio** con los **AI Agents** de n8n, con soporte completo para servidores **MCP (Model Context Protocol)** y tres modos de API.

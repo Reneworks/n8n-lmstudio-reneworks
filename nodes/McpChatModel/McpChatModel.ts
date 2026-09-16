@@ -307,11 +307,7 @@ export class McpChatModel extends BaseChatModel<McpChatModelCallOptions> {
 
     bindTools(tools: any[], kwargs?: Record<string, unknown>) {
         this.tools = tools ?? [];
-        const bind = super.bindTools as ((t: any[], k?: Record<string, unknown>) => any) | undefined;
-        if (bind) {
-            return bind.call(this, tools, kwargs);
-        }
-        return this.bind({ tools, ...kwargs });
+        return this;
     }
 
     async getNumTokens(content: string): Promise<number> {
