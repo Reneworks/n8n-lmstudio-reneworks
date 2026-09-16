@@ -1,42 +1,113 @@
 # n8n-nodes-lmstudio-reneworks
 
-This is a community node for n8n that allows you to connect **LM Studio** directly with n8n **AI Agents**, with full support for **MCP (Model Context Protocol)** servers.
+[Version en Espanol (README.md)](./README.md)
 
-It is designed to be the perfect bridge between your local LM Studio models and n8n's agentic capabilities.
+Community node for n8n that connects **LM Studio** with n8n **AI Agents**, with full support for **MCP (Model Context Protocol)** servers and three API modes.
 
-## Why use this node?
+## Why use this node
 
-1.  **Native AI Agents Compatibility**: Connects perfectly to the "Model" input of n8n agents.
-2.  **MCP Support**: Allows using tools (search tools, navigation, database, etc.) by connecting MCP servers directly in the node options.
-3.  **Optimized for LM Studio**: Configured to use the LM Studio `/api/v1/chat` endpoint, managing conversation history efficiently.
-4.  **Dynamic Model List**: Once the URL is configured, the node automatically loads the models you have downloaded in LM Studio.
+- **Multi-mode**: Choose between LM Studio native API, OpenAI Chat Completions, or OpenAI Responses depending on your agent's needs.
+- **Tool calling**: Compatible with LangChain tools and MCP. Works in native mode (MCP), Chat Completions (JSON tools), and Responses (JSON tools + MCP).
+- **Real-time streaming**: Native SSE events: `message.delta`, `chat.end`, `error`.
+- **Dynamic model list**: Automatically loads models downloaded in LM Studio.
+- **Optional authentication**: API key compatible with LM Studio and OpenAI providers.
 
 ## Installation
 
-In your n8n instance (Settings > Community Nodes), install the package:
-
-```bash
-n8n-nodes-lmstudio-reneworks
-```
-
-Or via terminal in your n8n directory:
+In your n8n instance (Settings > Community Nodes):
 
 ```bash
 npm install n8n-nodes-lmstudio-reneworks
 ```
 
-## Configuration
+Or locally:
 
-1.  Ensure you have **LM Studio** open and the **Local Server** activated (usually at `http://localhost:1234`).
-2.  In n8n, drag the **LM Studio Chat Model** node.
-3.  Configure the **Base URL** (e.g., `http://localhost:1234`).
-4.  Select the **Model** from the dropdown list (it will load automatically).
-5.  **Options**: Configure temperature, max tokens, etc.
-6.  **Integrations (Optional)**: This is where MCP magic happens. You can pass a JSON configuration to enable external MCP servers.
+```bash
+npm install n8n-nodes-lmstudio-reneworks
+```
 
-### Integration Example (MCP)
+## Quick setup
 
-You can enable tools like web navigation with Playwright or search on Hugging Face:
+1. Open LM Studio and enable the **Local Server** (`http://localhost:1234` by default).
+2. In n8n, add the **LM Studio Chat Model** node.
+3. Set the **Base URL**.
+4. Select the **Model** from the dropdown.
+5. Choose the **API Mode** for your use case.
+
+## API Modes
+
+### Native (`/api/v1/chat`) - Recommended for LM Studio
+
+The original and simplest mode. Ideal for conversational chat without external tools.
+
+- MCP via `integrations` (JSON array)
+- Conversation history as concatenated text
+- Configurable context length
+- **Does not** support custom tool calling (use Chat Completions or Responses for that)
+
+```json
+[
+  {
+    "type": "ephemeral_mcp",
+    "server_label": "huggingface",
+    "server_url": "https://huggingface.co/mcp",
+    "allowed_tools": ["model_search"]
+  }
+]
+```
+
+### Chat Completions (`/v1/chat/completions`)
+
+Compatible with the standard OpenAI API. Best mode for AI Agents that need tool calling with JSON.
+
+- Tools in OpenAI format (`convertToOpenAITool`)
+- JSON mode with `response_format: { type: "json_schema" }`
+- System prompt as system message
+- History as message array
+- SSE streaming
+
+### Responses (`/v1/responses`)
+
+OpenAI's Responses API. Combines remote MCP with native tool calling.
+
+- Remote MCP as `mcp` type tools
+- Tool calling via `convertToOpenAITool`
+- JSON mode with `text.format: { type: "json_schema" }`
+- SSE streaming
+
+## Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| API Mode | `native`, `chat`, or `responses` |
+| Streaming | Enable SSE streaming (chat and responses only) |
+| Temperature | 0-2. Controls randomness |
+| Max Tokens | Output token limit |
+| Top P | Nucleus sampling (0-1) |
+| Top K | Vocabulary limit |
+| Min P | Minimum probability filter |
+| Repeat Penalty | Repetition penalty |
+| Seed | Seed for reproducibility |
+| Stop | Stop tokens (comma-separated) |
+| Presence Penalty | Presence penalty |
+| Frequency Penalty | Frequency penalty |
+| Context Length | Context length |
+| Reasoning | Enable reasoning in compatible models |
+| JSON Mode | Enable JSON mode |
+| Response Schema | Schema for JSON mode |
+
+## Example with AI Agent
+
+```
+[LM Studio Chat Model] --> [AI Agent]
+         |
+         Base URL: http://localhost:1234
+         Model: local-model
+         API Mode: responses
+         Integrations: [...]
+```
+
+## Integration example (MCP)
 
 ```json
 [
@@ -54,13 +125,20 @@ You can enable tools like web navigation with Playwright or search on Hugging Fa
 ]
 ```
 
-## Technical Operation
+## Credential (optional)
 
-This node acts as a LangChain wrapper that translates n8n requests to the specific LM Studio API format. It automatically handles:
-- `System Prompt` extraction.
-- Chat history concatenation for maximum compatibility with local models.
-- Tool and plugin management via LM Studio's integration system.
+The node supports an optional API key for authentication. If LM Studio or your provider requires it, configure it in n8n Credentials (LM Studio API). If not needed, leave the field empty.
+
+## Technical details
+
+The node acts as a LangChain wrapper that translates n8n requests to the selected API format:
+
+- **Native**: Manages conversation history as concatenated text and LM Studio's native MCP integration system.
+- **Chat**: Standard OpenAI format with tool calling and JSON mode.
+- **Responses**: OpenAI Responses API with remote MCP and tool calling.
+- **Streaming**: Real-time SSE events for chat and responses modes.
 
 ---
-Developed with ❤️ for the n8n community.
+
+Developed with love for the n8n community.
 Visit my website: [reneworks.mx](https://reneworks.mx)

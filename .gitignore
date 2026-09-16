@@ -3,4 +3,4 @@ dist/
 *.log
 .DS_Store
 *.tgz
-# package-lock.json
+package-lock.json
